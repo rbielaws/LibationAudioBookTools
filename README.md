@@ -4,7 +4,7 @@ without the time or background to satisfy them.  I've been an Audible user for m
 books containing thousands of bookmarks.  These combine to call for more functionality.
 
 ## How to use the tools
-I choose PowerShell because it's trivially available on all platforms where Libation runs and requires no additional 
+I choose PowerShell because it's trivially available on all platforms where [Libation](https://github.com/Mbucari/Libation)  runs and requires no additional 
 tools to accomplish it's goal or be maintained.  In general:
 
 1) Download the appropriate .ps1 file
