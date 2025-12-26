@@ -40,7 +40,8 @@ param([parameter(Mandatory=$true)]
        [boolean]                                                     $PreferMono       = $false,
        [boolean]                                                     $AssumeTrim       = $false,
        [string] [ValidateSet('Title','Subtitle','Mixed')]            $TitleFormat      = 'Title',
-       [string]                                                      $ChapterSeparator = ' | '
+       [string]                                                      $ChapterSeparator = ' | ',
+       [boolean]                                                     $Quiet            = $false
      )
 
 # block is for testing
@@ -149,7 +150,7 @@ Function Build-SabpXml ($BookID){
   $OutFile  = $BookData.LocationData.SabpFilename
   $SabpList = Build-SabpList $BookData
   $Result   = Convert-ToBookmarkXML $SabpList
-  $Type     = $BookData.CreateMonolithic?"Monolithic":"Chapterized"
+  $Type     = $BookData.CreateMonolithic?"Monolithic ":"Chapterized"
   Write-Host "Creating $Type-{$BookID}: $OutFile"
   $Result.Replace('encoding="utf-16"','encoding="UTF-8"') | `
     Out-File -LiteralPath $OutFile -Encoding utf8
@@ -219,7 +220,9 @@ Function Get-BookMetadata($BookID){
   }
   # Don't bother doing more processing if the output isn't going to be wanted
   If ($SkipExisting -and (Test-Path -LiteralPath $LocationData.SabpFilename)) {
-    Write-Host "Skipping '$BookID': -SkipExisting is true and '$($LocationData.SabpFilename)' exists"
+    if (!$Quiet) {
+      Write-Host "Skipping '$BookID': -SkipExisting is true and '$($LocationData.SabpFilename)' exists"
+    }
     Return
   }
   $FileBaseName     = $LocationData.FileBaseName
@@ -418,7 +421,7 @@ If ($IdList[0]??'*' -eq '*') {
 $IdList|%{Build-SabpXml $_}
 
 <# # All this is for testing and debugging
-  $BookID = 'B01L2PE1XI'
+  $BookID = 'B09PSSTFP3'
   $LocationData = $FileLocations[$BookID]
   # Trying to generate for a book that doesn't have all the needed metadata is impossible
   If (!$LocationData) {
@@ -459,4 +462,14 @@ $IdList|%{Build-SabpXml $_}
   # Setting literally lets me determine it some other way later.  Only this value is used by generator
   Add-Member -InputObject $BookMetadata.ChapterInfo -MemberType NoteProperty -Name 'AssumeTrim' -Value $AssumeTrim
   $BookMetadata
+
+  $BookData = $BookMetadata
+  # Assume any error collecting data has already been reported
+  $OutFile  = $BookData.LocationData.SabpFilename
+  $SabpList = Build-SabpList $BookData
+  $Result   = Convert-ToBookmarkXML $SabpList
+  $Type     = $BookData.CreateMonolithic?"Monolithic":"Chapterized"
+  Write-Host "Creating $Type-{$BookID}: $OutFile"
+  $Result.Replace('encoding="utf-16"','encoding="UTF-8"') | `
+    Out-File -LiteralPath $OutFile -Encoding utf8
 #>
