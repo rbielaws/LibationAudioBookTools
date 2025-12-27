@@ -45,7 +45,7 @@ to merge notes made within Calc or any other non-xml aware tool, so it's close t
 Feel free to make suggestions.
 
 
-# SeparateByHierarchy.ps1
+# Split-ByHierarchy.ps1
 
 I plan to start on this shortly.
 Basically, audiobooks that are austensibly anthologies are typically arranged within the metadata as a hierarchy of chapters.
