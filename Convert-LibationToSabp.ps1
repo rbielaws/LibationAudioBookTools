@@ -22,12 +22,12 @@
 .PARAMETER ChapterSeparator
    The default is ' | '. For example Part II | Chapter 4. Used by TitleFormat
 .EXAMPLE
-    ./LibationToSabp.ps1 '~/.local/share/Libation/'
+    ./Convert-LibationToSabp.ps1 '~/.local/share/Libation/'
 
     This example processes all downloaded books.
     Book directories with an existing bookmarks.sabp.xml file are skipped.
 .EXAMPLE
-    ./LibationToSabp.ps1 '~/.local/share/Libation/' -IdList B0CRBKZLD5,B0CY7BVTW9,B094X2RN1F,B09WB2V33H,B01L2PE1XI
+    ./Convert-LibationToSabp.ps1 '~/.local/share/Libation/' -IdList B0CRBKZLD5,B0CY7BVTW9,B094X2RN1F,B09WB2V33H,B01L2PE1XI
 
     This example updates bookmarks for the listed books only. Existing bookmark files are overwritten.
 #>
