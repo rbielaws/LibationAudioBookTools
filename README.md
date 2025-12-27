@@ -15,7 +15,7 @@ tools to accomplish it's goal or be maintained.  In general:
 As an example, after downloading LibationToSabp.ps1, the above command should describe exactly what the script does,
 which parameters are required and what optional parameters are available to influence your specific results.
 
-# LibationToSabp.ps1
+# Convert-LibationToSabp.ps1
 
 I use books for research as well as entertainment.  Audible doesn't allow me to download my bookmarks,
 which typically contain numerous, sometimes extensive notes.   [Libation](https://github.com/Mbucari/Libation) lets me easily retrieve them but
