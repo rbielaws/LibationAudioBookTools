@@ -10,7 +10,7 @@ tools to accomplish it's goal or be maintained.  In general:
 1) Download the appropriate .ps1 file
 2) Execute it from a PowerShell command prompt.  All the scripts support help.
 
-    help ./LibationToSabp.ps1 -full
+    help ./Convert-LibationToSabp.ps1 -full
 
 As an example, after downloading LibationToSabp.ps1, the above command should describe exactly what the script does,
 which parameters are required and what optional parameters are available to influence your specific results.
