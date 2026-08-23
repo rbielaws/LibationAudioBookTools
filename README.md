@@ -31,26 +31,28 @@ For books split by chapter, only user bookmarks are created.  They point to the 
 
 ## Future plans
 
-Updates I'm considering:
-1) Option to exclude chapter or manual bookmarks when they would otherwise be created.
-2) Ability to detect .json bookmark source updates from Libation.
-3) Ability to merge Libation sourced bookmarks with Smart AudioBook Player created bookmarks
-4) Ability to read all the Smart AudioBook Player bookmark files and merge them into a single source.
+I did have a list here but I've since created an [AudioBookShelf](https://audiobookshelf.org/) and started using the [Absorb](https://github.com/pounat/absorb) UI I've given up working to make Smart AudioBook player have better bookmark support.
 
-The main block to merging all Bookmark/Notes is deciding what format to use.  Choices range from tab separated
-text to rows in a database.  At the moment I simply merge all the files into a monolithic XML and open it with
-the experimental Libreoffice-Calc feature 'XML Source'.  This does not give me anything resembling the ability
-to merge notes made within Calc or any other non-xml aware tool, so it's close to useless as-is.  
+AudioBookShelf has huge advantages when it comes to bookmarks and so I'm in the process of finding a way to import the thousands I have to the AudioBookShelf DB.
+The UI you choose to use with AudioBookShelf is not, as far as I know, important.  I just mentioned the one I choose in case you're interested.
+If/when I get the conversion done I'll create a repository here with how I did it unless it's terribly messy.
 
-Feel free to make suggestions.
+The timestamp conversion in AudioBookShelf WAS A MESS!  I wanted the AudioBookShelf to be able to list books in the order I acquired them.
+Although this is easy in Libation because it knows the purchase dates, AudioBookShelf gives no mechanism to set the createdAt value.
+The closest you could possibly come is to place books in your directory structure one-by-one, doing an import on each one (800 times? I don't think so).
+Since you imported them in order and it's possible to display in import order you come close but wouldn't have the actual purchase date.
+I ended up querying the real dates from the Libation db along with the ASIN.
+Then, because the AudioBookShelf DB doesn't contain the ASIN, I had to connect to its API to map their internal ID to the ASIN.
+Then I could build sql update statements to set the internal ID createdAt to the purchase date.
+Updates were then issued one by one via a script built from merging the two sets of data.  YUCK
 
 
 # Split-ByHierarchy.ps1
 
-I plan to start on this shortly.
-Basically, audiobooks that are austensibly anthologies are typically arranged within the metadata as a hierarchy of chapters.
+Although I came up with this for Smart AudioBook player, It looks like it might work for AudioBookShelf.
+Basically, audiobooks that are austensibly anthologies are typically arranged within Libation metadata as a hierarchy of chapters.
 When this is true, breaking out the first level of hierarchy into separate directories should be relatively easy.  
-This tool, by moving groups of chapters into subdirectories, would allow one to access top level collections of chapters as
+The proposed tool, by moving groups of chapters into subdirectories, would allow one to access top level collections of chapters as
 stand-alone books.
 
 Since I haven't actually started, I'm not yet sure how this will interact with LibationToSabp when it comes to personal bookmarks.
